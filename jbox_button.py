@@ -1,29 +1,59 @@
 import RPi.GPIO as GPIO
 import time
 import os
+import threading
 
-paused = True
+active_playlist = 0
+playlists =[]
 
-def playPause(channel):
-    global paused
+##Loads the list of audiobooks / albums listed in
+##
+##'playlists.lst'
+##
+##in the main directory
+
+def infoThread():
+    threading.Timer(1.0, infoThread).start()
+    print "Info"
+    
+def loadPlaylists():
+    f = open('playlists.lst','r')
+    playlists =[]
+    for line in f:
+        playlists.append(line.rstrip())
+    return playlists
+    
+def mpc_toggle(channel):
     print('Button pressed %s' %channel)
-    if paused == True:
-        os.system("mpc play")
-        paused = False
-    else:
-        os.system("mpc pause")
-        paused = True
+    os.system("mpc -q toggle")
 
 def mpc_next(channel):
     print('Button pressed %s' %channel)
-    os.system("mpc next")
+    os.system("mpc -q next")
 
 def mpc_prev(channel):
     print('Button pressed %s' %channel)
-    os.system("mpc prev")
+    os.system("mpc -q prev")
 
-
+def mpc_next_playlist(channel):
+    global active_playlist, playlists
+    
+    print("INSIDE")
+    print playlists
+    print("playlist active %d" %active_playlist)
+    num_playlists = len(playlists)
+    active_playlist = (active_playlist + 1) % num_playlists
+    print active_playlist
+    os.system("mpc -q clear")
+    cmdstr = "mpc -q load \""+playlists[active_playlist]+"\""
+    print cmdstr
+    os.system(cmdstr)
+    os.system("mpc -q play")
+    
 def main():
+    global playlists
+    playlists = loadPlaylists()
+    print playlists
     ajb_button1 = 18
     ajb_button2 = 16
     ajb_button3 = 20
@@ -49,15 +79,17 @@ def main():
 ##            print('Button pressed')
 ##            playPause()
 ##            time.sleep(0.2)
-    GPIO.add_event_detect(ajb_button1, GPIO.RISING)
-    GPIO.add_event_detect(ajb_button2, GPIO.RISING)
-    GPIO.add_event_detect(ajb_button3, GPIO.RISING)
-    GPIO.add_event_detect(ajb_button4, GPIO.RISING)
-    GPIO.add_event_callback(ajb_button1, playPause)
+    GPIO.add_event_detect(ajb_button1, GPIO.RISING, bouncetime=200)
+    GPIO.add_event_detect(ajb_button2, GPIO.RISING, bouncetime=200)
+    GPIO.add_event_detect(ajb_button3, GPIO.RISING, bouncetime=200)
+    GPIO.add_event_detect(ajb_button4, GPIO.RISING, bouncetime=200)
+    GPIO.add_event_callback(ajb_button1, mpc_toggle)
     GPIO.add_event_callback(ajb_button2, mpc_prev)
     GPIO.add_event_callback(ajb_button3, mpc_next)
-    #GPIO.add_event_callback(ajb_button1, playPause)
+    GPIO.add_event_callback(ajb_button4, mpc_next_playlist)
+    infoThread()
     try:
+        
         while True:
             pass
 
@@ -65,6 +97,7 @@ def main():
         GPIO.cleanup()
 
     GPIO.cleanup()
+
     
 if __name__ == "__main__":
     main()
