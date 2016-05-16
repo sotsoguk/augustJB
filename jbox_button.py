@@ -2,6 +2,7 @@ import RPi.GPIO as GPIO
 import time
 import os
 import threading
+from subprocess import Popen, PIPE
 
 active_playlist = 0
 playlists =[]
@@ -12,9 +13,21 @@ playlists =[]
 ##
 ##in the main directory
 
+def mpc_formatinfo(output):
+    info_lines = output.split('\n')
+    
 def infoThread():
     threading.Timer(1.0, infoThread).start()
-    print "Info"
+    cmd = "mpc -f \%album\%"
+    p = Popen(["mpc","-f","%album%"], stdout=PIPE, stderr=PIPE)
+    stdout, stderr = p.communicate()
+    info_lines = stdout.split('\n')
+    info_status = info_lines[1].split(' ')
+
+    print info_status[0] + " " + info_lines[0] + "\n" + info_status[1] + " " + info_status[4]
+    
+    
+    
     
 def loadPlaylists():
     f = open('playlists.lst','r')
