@@ -90,7 +90,7 @@ def main():
     
         
 ##    while True:
-##        input_state = GPIO.input(
+##        input_state = GPIO.input( 
 ##        if input_state == False:
 ##            print('Button pressed')
 ##            playPause()

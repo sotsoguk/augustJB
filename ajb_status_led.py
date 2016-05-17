@@ -9,15 +9,15 @@ import time, sys
 import ajb_config
 import RPi.GPIO as GPIO
 
-class status_led(object):
+class Ajb_Status_Led(object):
 
     # configure patterns
     led_patterns = {
         'on' : (.1, [True]),
         'off': (.1, [False]),
-        'blink_fast' : (0.1, [False, True]),
-        'blink' : (0.1, [False, False, False, False, False, True, True, True, True]),
-        'blink_pause' : (0.1, [False,False,False,False,False,False,False,True])
+        'blink_fast' : (.1, [False, True]),
+        'blink' : (.1, [False, False, False, False, False, True, True, True, True]),
+        'blink_pause' : (.1, [False,False,False,False,False,False,False,True]),
         }
 
     interrupt_pattern = [0, []]
@@ -26,11 +26,11 @@ class status_led(object):
 
     led_pin = None
 
-    def __init(self, led_pin):
+    def __init__(self, led_pin):
         self.led_pin = led_pin
 
     def interrupt(self, action, repeat = 1):
-        self.interrupt_pattern = self.led_patterns[action][0]
+        self.interrupt_pattern[0] = self.led_patterns[action][0]
 
         for i in range(0, repeat):
             self.interrupt_pattern[1].extend(list(self.led_patterns[action][1][:]))
@@ -65,6 +65,6 @@ class status_led(object):
         GPIO.cleanup()
 
 if __name__ == '__main__':
-    light = status_led(ajb_config.status_led_pin)
+    light = Ajb_Status_Led(ajb_config.status_led_pin)
     light.interrupt('blink_fast',3)
     light.start()
