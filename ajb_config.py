@@ -18,4 +18,4 @@ btn_pins = [
     { 'pin' : 20, 'callback' : 'ffw', 'bouncetime' : 200},
     { 'pin' : 21, 'callback' : 'stop', 'bouncetime' : 200}
 ]
-led_pin = 26
+status_led_pin = 26

@@ -6,6 +6,7 @@ from subprocess import Popen, PIPE
 
 # custom imports
 import ajb_config
+from ajb_status_led import status_led
 active_playlist = 0
 playlists =[]
 
