@@ -54,6 +54,11 @@ class Ajb_Player(object):
                 self.status_led.interrupt('blink_fast',3)
             print 'toggle %s' %state
 
+    def ffw(self, channel):
+        self.status_led.interrupt('blink_fast',3)
+        with self.mpd_client:
+            self.mpd_client.next()
+    
     def rewind(self, channel):
         # rewind 20 secs
 
@@ -93,7 +98,7 @@ class Ajb_Player(object):
             self.mpd_client.setvol(volume)
             print "volume now at %d" %volume
 
-    def stop(self):
+    def stop(self,channel):
 
         self.playing = False
         # self.book.reset()
@@ -102,7 +107,9 @@ class Ajb_Player(object):
 
         with self.mpd_client:
             self.mpd_client.stop()
-            self.mpd_client.clear()
+            #self.mpd_client.clear()
+            self.mpd_client.seek(0,0)
+            self.mpd_client.stop()
 
     def play(self, book_id, progress=None):
         # TODO progress, file loading etc
