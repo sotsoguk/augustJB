@@ -4,6 +4,8 @@ import os
 import threading
 from subprocess import Popen, PIPE
 
+# custom imports
+import ajb_config
 active_playlist = 0
 playlists =[]
 
