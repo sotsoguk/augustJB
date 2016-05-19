@@ -130,7 +130,7 @@ class Ajb_Player(object):
             return self.mpd_client.currentsong()
 
     def close(self):
-        self.stop()
+        self.stop(10)
         self.mpd_client.close()
         self.mpd_client.disconnect()
         

@@ -51,7 +51,8 @@ class Ajb(object):
             # TODO Book finished
 
             # TODO RFID
-
+            rfid_placeholder = input("tag")
+            print rfid_placeholder
             time.sleep(0.5)
 
     def on_playing(self):

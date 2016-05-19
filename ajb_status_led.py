@@ -16,8 +16,8 @@ class Ajb_Status_Led(object):
         'on' : (.1, [True]),
         'off': (.1, [False]),
         'blink_fast' : (.1, [False, True]),
-        'blink' : (.1, [False, False, False, False, False, True, True, True, True]),
-        'blink_pause' : (.1, [False,False,False,False,False,False,False,True]),
+        'blink' : (.2, [False, False, False, False, False, True, True, True, True,True]),
+        'blink_pause' : (.2, [False,False,False,False,False,False,False,False,True]),
         }
 
     interrupt_pattern = [0, []]
