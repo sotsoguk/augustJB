@@ -18,8 +18,17 @@ for directory in music_directories:
     print name_playlist
     f = open(name_playlist,'w')
     for line in music_files:
-        f.write(directory + '/' + line)
-        f.write('\n')
+        extension = os.path.splitext(line)[1]
+        # write only music files
+        if extension in ['.mp3','.m4a','.wav','.aac','.mp4','.maa']:
+            f.write(directory + '/' + line)
+            f.write('\n')
+        # detect rfid     
+        elif extension == '.id':
+            print 'RFID FOUND'
+
+        else:
+            print "Unknown File format!\n"
     f.close()
     g.write(directory+'\n')
 
