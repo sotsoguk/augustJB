@@ -1,8 +1,14 @@
+
 # test playlist creation
 
+import sqlite3 as lite
+import sys
 import os
 from os import listdir
 from os.path import isfile, join
+
+# db stuff
+con = lite.connect('test.db')
 
 # for each directory of music files create playlist
 path_music = '/var/lib/mpd/music'
@@ -16,6 +22,13 @@ for directory in music_directories:
     name_playlist = path_playlists + '/' + directory + '.m3u'
     print path_tmp
     print name_playlist
+    # check if book already in DB
+    for line in music_files:
+        extension = os.path.splitext(line)[1]
+        if extension == '.id':
+            print "Fancy ID Found"
+        else:
+            pass
     f = open(name_playlist,'w')
     for line in music_files:
         extension = os.path.splitext(line)[1]
@@ -25,7 +38,9 @@ for directory in music_directories:
             f.write('\n')
         # detect rfid     
         elif extension == '.id':
-            print 'RFID FOUND'
+            id_file = path_music+'/'+directory+'/'+line
+            print 'RFID FOUND in %s' % id_file
+
 
         else:
             print "Unknown File format!\n"
