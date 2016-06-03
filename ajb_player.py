@@ -8,19 +8,25 @@ from threading import Lock
 import ajb_config
 import re
 
+
 class LockableMPDClient(MPDClient):
     def __init__(self, use_unicode=False):
         super(LockableMPDClient, self).__init__()
         self.use_unicode = use_unicode
         self._lock = Lock()
+
     def acquire(self):
         self._lock.acquire()
+
     def release(self):
         self._lock.release()
+
     def __enter__(self):
         self.acquire()
+
     def __exit__(self, type, value, traceback):
         self.release()
+
 
 class Ajb_Player(object):
 
@@ -32,14 +38,14 @@ class Ajb_Player(object):
         self.mpd_client = LockableMPDClient()
         with self.mpd_client:
             self.mpd_client.connect(**conn_details)
-            
+
             self.mpd_client.update()
             self.mpd_client.clear()
             self.mpd_client.add('Revolver')
             self.mpd_client.play()
-            #self.mpd_client.setvol(70)
-            
+            # self.mpd_client.setvol(70)
 
+    # toggle play / pause
     def toggle(self, channel):
 
         with self.mpd_client:
@@ -50,56 +56,62 @@ class Ajb_Player(object):
             elif state == 'pause':
                 self.status_led.action = 'blink'
                 self.mpd_client.play()
-            else:
-                self.status_led.interrupt('blink_fast',3)
-            print 'toggle %s' %state
+            elif self.is_playing:
+                self.status_led.interrupt('blink_fast', 3)
+                print "playing again"
+                self.mpd_client.seek(0, 0)
+                self.status_led.action = 'blink'
+                self.mpd_client.play()
+            new_state = self.mpd_client.status()['state']
+            print 'was %s, now  %s' % (state, new_state)
 
     def ffw(self, channel):
-        self.status_led.interrupt('blink_fast',3)
+        self.status_led.interrupt('blink_fast', 3)
         with self.mpd_client:
             self.mpd_client.next()
-    
+
     def rewind(self, channel):
         # rewind 20 secs
 
-        self.status_led.interrupt('blink_fast',3)
+        self.status_led.interrupt('blink_fast', 3)
 
         with self.mpd_client:
             self.mpd_client.previous()
-##        if self.is_playing():
+# if self.is_playing():
 ##            song_index = int(self.book.part) -1
 ##            elapsed = int(self.book.elapsed)
 ##
-##            with self.mpd_client:
-##                if elapsed > 20:
+# with self.mpd_client:
+# if elapsed > 20:
 ##                    self.mpd_client.seek(song_index, elapsed -20)
-##                elif song_index >0:
+# elif song_index >0:
 ##                    prev_song = self.mpd_client.playlistinfo(song_index -1)[0]
 ##                    prev_song_len = int(prev_song['time'])
 ##
-##                    if prev_song_len >0:
+# if prev_song_len >0:
 ##                        self.mpd_client.seek(song_index-1, prev_song_len -20)
-##                    else:
+# else:
 ##                        self.mpd_client.seek(song_index-1, 0)
-##                else:
-##                    self.mpd_client.seek(0,0)
+# else:
+# self.mpd_client.seek(0,0)
 
     def volume_up(self, channel):
         volume = int(self.get_status()['volume'])
-        self.set_volume(min(volume + 10,100))
+        self.set_volume(min(volume + 10, 100))
 
     def volume_down(self, channel):
         volume = int(self.get_status()['volume'])
-        self.set_volume(max(volume - 10,0))
+        self.set_volume(max(volume - 10, 0))
 
     def set_volume(self, volume):
-        self.status_led.interrupt('blink_fast',3)
+        self.status_led.interrupt('blink_fast', 3)
         with self.mpd_client:
             self.mpd_client.setvol(volume)
-            print "volume now at %d" %volume
+            print "volume now at %d" % volume
 
-    def stop(self,channel):
+    def stop(self, channel):
 
+        print "stopping!"
         self.playing = False
         # self.book.reset()
 
@@ -107,8 +119,8 @@ class Ajb_Player(object):
 
         with self.mpd_client:
             self.mpd_client.stop()
-            #self.mpd_client.clear()
-            self.mpd_client.seek(0,0)
+            # self.mpd_client.clear()
+            self.mpd_client.seek(0, 0)
             self.mpd_client.stop()
 
     def play(self, book_id, progress=None):
@@ -116,7 +128,7 @@ class Ajb_Player(object):
         with self.mpd_client:
             self.mpd_client.play()
 
-        self.status_led.action='blink'
+        self.status_led.action = 'blink'
 
     def is_playing(self):
         return self.get_status()['state'] == 'play'
@@ -133,9 +145,3 @@ class Ajb_Player(object):
         self.stop(10)
         self.mpd_client.close()
         self.mpd_client.disconnect()
-        
-        
-
-                    
-        
-        
