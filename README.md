@@ -1,5 +1,5 @@
 # augustJB
-![https://goo.gl/photos/vBS3DPWmsKmhA23v6](First protoype)
+![IMG_1263.JPG](First protoype)
 ## changelog
 ### 2016-09-26 
 first alpha (0.01) version
