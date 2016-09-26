@@ -1,8 +1,15 @@
 # augustJB
 
-## Motivation
+## changelog
+### 2016-09-26 
+first alpha (0.01) version
+- RFID basic functionality :D
 
-## Function
-### Buttons
-#### Play / Pause
-#### Stop
+## TODO
+
+### Final Hardware
+- Check port numbering (model a/b vs 2nd generation)
+- power saving
+- minimum ISO
+- autostart *augustJB* after power on
+- **BACKUP FINAL SD CARD -> IMAGE**
