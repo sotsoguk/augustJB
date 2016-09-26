@@ -47,7 +47,7 @@ class Ajb_Player(object):
 
     # toggle play / pause
     def toggle(self, channel):
-
+	print channel
         with self.mpd_client:
             state = self.mpd_client.status()['state']
             if state == 'play':
@@ -66,7 +66,8 @@ class Ajb_Player(object):
             print 'was %s, now  %s' % (state, new_state)
 
     def ffw(self, channel):
-        self.status_led.interrupt('blink_fast', 3)
+        print channel
+	self.status_led.interrupt('blink_fast', 3)
         with self.mpd_client:
             self.mpd_client.next()
 

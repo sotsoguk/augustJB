@@ -37,7 +37,7 @@ class Ajb_Status_Led(object):
 
     def start(self):
         # perform led action
-        GPIO.setmode(GPIO.BCM)
+        GPIO.setmode(GPIO.BOARD)
         GPIO.setup(self.led_pin, GPIO.OUT)
         self.action = 'on'
 

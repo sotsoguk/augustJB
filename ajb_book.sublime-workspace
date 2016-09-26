@@ -1,0 +1,360 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"num",
+				"num_tracks	statement"
+			],
+			[
+				"rf",
+				"rfid_id	statement"
+			],
+			[
+				"nu",
+				"num_books	statement"
+			],
+			[
+				"mp",
+				"mpd_client	statement"
+			],
+			[
+				"ex",
+				"execute"
+			],
+			[
+				"r",
+				"rfid_id"
+			],
+			[
+				"exis",
+				"existsBook"
+			],
+			[
+				"id",
+				"id_file"
+			],
+			[
+				"music",
+				"music_files"
+			],
+			[
+				"path_",
+				"path_music"
+			],
+			[
+				"try",
+				"try	Try/Except/Finally"
+			],
+			[
+				"set",
+				"setProgress"
+			],
+			[
+				"ge",
+				"getName"
+			],
+			[
+				"di",
+				"div	Tag"
+			],
+			[
+				"cur",
+				"current_file"
+			],
+			[
+				"curren",
+				"current_line"
+			],
+			[
+				"print",
+				"print_a_line"
+			],
+			[
+				"re",
+				"rewind"
+			],
+			[
+				"print_",
+				"print_one"
+			],
+			[
+				"out",
+				"out_file"
+			],
+			[
+				"to",
+				"to_file"
+			],
+			[
+				"from",
+				"from_file"
+			],
+			[
+				"file",
+				"filename"
+			],
+			[
+				"liv",
+				"lives"
+			],
+			[
+				"tab",
+				"tabby_cat"
+			],
+			[
+				"for",
+				"formatter"
+			],
+			[
+				"lon",
+				"long_wait"
+			],
+			[
+				"my_we",
+				"my_weight_kg"
+			],
+			[
+				"car",
+				"cars_driven"
+			]
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 392.0,
+		"last_filter": "inst",
+		"selected_items":
+		[
+			[
+				"inst",
+				"Package Control: Install Package"
+			],
+			[
+				"pac",
+				"Package Control: List Packages"
+			],
+			[
+				"markdo",
+				"Markdown Preview: Preview in Browser"
+			],
+			[
+				"Package Control: ins",
+				"Package Control: Install Package"
+			],
+			[
+				"task",
+				"Tasks: View as HTML"
+			],
+			[
+				"pack",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 449.0
+	},
+	"console":
+	{
+		"height": 126.0,
+		"history":
+		[
+			"import urllib.request,os,hashlib; h = '2915d1851351e5ee549c20394736b442' + '8bc59f460fa1548d1514676163dafc88'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)",
+			"import urllib.request,os,hashlib; h = '7183a2d3e96f11eeadd761d777e62404' + 'e330c659d4bb41d3bdf022e94cab3cd0'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://sublime.wbond.net/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/Volumes/192.168.1.25/Projects/augustJB/sql_test.py",
+		"/Volumes/RPi 30/MFRC522-python/Read.py",
+		"/Volumes/192.168.1.25/Projects/augustJB/ajb_status_led.py",
+		"/Volumes/RPi 30/Projects/augustJB/ajb_status_led.py",
+		"/Volumes/RPi 30/Projects/augustJB/ajb_books.py",
+		"/Volumes/RPi 30/Projects/augustJB/ajb_book.py",
+		"/Volumes/192.168.1.25/Projects/augustJB/ajb_config.py",
+		"/Users/sotsoguk/Projects/asciiArt/asciiArt.py",
+		"/Users/sotsoguk/Projects/asciiArt/out.txt",
+		"/Volumes/RPi 30/Projects/augustJB/MFRC522.py",
+		"/Volumes/RPi 30/Projects/augustJB/ajb_config.py",
+		"/Volumes/RPi 30/Projects/augustJB/main.py",
+		"/Volumes/RPi 30/Projects/augustJB/jbox_button.py",
+		"/Volumes/RPi 30/Projects/augustJB/ajb_player.py",
+		"/Volumes/192.168.1.25/Projects/augustJB/main.py",
+		"/Users/sotsoguk/augustJB/README.md",
+		"/Volumes/192.168.1.25/Projects/augustJB/ajb_player.py",
+		"/Volumes/192.168.1.25/Projects/augustJB/ajb_books.py",
+		"/Users/sotsoguk/Library/Application Support/Sublime Text 3/Packages/AutoPEP8/AutoPep8.sublime-settings",
+		"/Volumes/192.168.1.25/Projects/augustJB/ajb_book.py",
+		"/Volumes/192.168.1.25/Projects/augustJB/createPlaylists.py",
+		"/Users/sotsoguk/Desktop/Udacity HTML/toplist/style.css",
+		"/Users/sotsoguk/togglIcons.sh",
+		"/Users/sotsoguk/Desktop/mathprimer - bedingte wahrscheinlichkeit.md",
+		"/Users/sotsoguk/Downloads/assignment1/cs231n/data_utils.py",
+		"/Users/sotsoguk/Desktop/Udacity HTML/toplist/index.html",
+		"/Users/sotsoguk/Library/Application Support/Abricotine/app/config.json",
+		"/Users/sotsoguk/Projects/yiPython/Xiaomi_Yi/Standalone_scripts/settings.py",
+		"/Users/sotsoguk/Downloads/assignment1/cs231n/data_utils.pyc",
+		"/Users/sotsoguk/Library/Application Support/Sublime Text 3/Packages/PlainTasks/PlainTasks (OSX).sublime-settings",
+		"/Users/sotsoguk/Library/Application Support/Sublime Text 3/Packages/User/PlainTasks.sublime-settings",
+		"/Users/sotsoguk/Projects/config/env.sh",
+		"/Users/sotsoguk/Downloads/config.json",
+		"/Users/sotsoguk/Dropbox/Dokumente/Psychiatrie/Adressenliste P31.md",
+		"/Users/sotsoguk/Dropbox/gtd/main.taskpaper",
+		"/Users/sotsoguk/env.sh",
+		"/Users/sotsoguk/q.log",
+		"/Applications/WakeUpServer.app/Contents/document.wflow",
+		"/Users/sotsoguk/.gitignore",
+		"/Users/sotsoguk/.zshrc",
+		"/Users/sotsoguk/.zshr"
+	],
+	"find":
+	{
+		"height": 35.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"channel",
+			"toggle",
+			"\"\"\"",
+			"GPIO",
+			"setmode",
+			"imread",
+			"anschreiben",
+			"my_name"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"my_name"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 25.0
+	},
+	"input":
+	{
+		"height": 0.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.autopep8":
+	{
+		"height": 100.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "",
+	"project": "ajb_book.sublime-project",
+	"replace":
+	{
+		"height": 46.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 118.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
