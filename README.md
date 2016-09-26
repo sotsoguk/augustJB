@@ -1,5 +1,5 @@
 # augustJB
-![IMG_1263.JPG](First protoype)
+![First prototype](IMG_1263.JPG)
 ## changelog
 ### 2016-09-26 
 first alpha (0.01) version
