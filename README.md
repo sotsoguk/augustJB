@@ -13,3 +13,9 @@ first alpha (0.01) version
 - minimum ISO
 - autostart *augustJB* after power on
 - **BACKUP FINAL SD CARD -> IMAGE**
+
+
+## MISC
+
+### Music
+- stored in 

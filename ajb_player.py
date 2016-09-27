@@ -124,7 +124,7 @@ class Ajb_Player(object):
             self.mpd_client.seek(0, 0)
             self.mpd_client.stop()
 
-    def play(self, book_id, progress=None):
+    def play(self):
         # TODO progress, file loading etc
         with self.mpd_client:
             self.mpd_client.play()
@@ -146,3 +146,14 @@ class Ajb_Player(object):
         self.stop(10)
         self.mpd_client.close()
         self.mpd_client.disconnect()
+
+    def clearPL(self):
+        print "Clear Playlist"
+        with self.mpd_client:
+            self.mpd_client.clear()
+
+    def loadPL(self,namePL):
+        print "Load Playlist:"+ namePL
+        with self.mpd_client:
+            self.mpd_client.clear()
+            self.mpd_client.load(namePL)

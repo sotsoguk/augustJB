@@ -20,6 +20,7 @@ class Ajb_Books(object):
         self.updateBooks()
 
     def existsBook(self, rfid):
+        print "In existsBook" + rfid
         with self.con:
             cur = self.con.cursor()
             cur.execute(
@@ -32,6 +33,21 @@ class Ajb_Books(object):
                 print "%s found in DB" % rfid
                 return True
 
+    def getBookByRfid(self, rfid):
+        print "In getBookByRfid:"
+        bookName =""
+        with self.con:
+            cur = self.con.cursor()
+            cur.execute(
+                'SELECT Name, NumTracks, Tracks, Secs FROM Books WHERE Rfid = "{rf}"'.format(rf=rfid))
+            for row in cur:
+                print row[0]
+                print row[1]
+                print row[2]
+                print row[3]
+                bookName = row[0]
+        return bookName
+        
     def number_books_db(self):
         with self.con:
             cur = self.con.cursor()
@@ -109,6 +125,7 @@ class Ajb_Books(object):
 
 if __name__ == '__main__':
     books_db = Ajb_Books()
+    books_db.updateBooks()
     print "in Main Books"
     print "check DB exist"
     bookEx = books_db.existsBook("121 111 111")

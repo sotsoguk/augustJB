@@ -7,6 +7,8 @@ import ajb_config
 import RPi.GPIO as GPIO
 from ajb_player import Ajb_Player
 from ajb_status_led import Ajb_Status_Led
+from ajb_books import Ajb_Books
+from ajb_book import Ajb_Book
 from threading import Thread
 import MFRC522
 # import sqlite3
@@ -16,11 +18,15 @@ import MFRC522
 class Ajb(object):
 
    
+    def uid2str(self,uid):
+        return str(uid[0])+","+ str(uid[1])+","+str(uid[2])+","+str(uid[3]);
 
     def __init__(self):
 
         # TODO RFID
         self.activeUidKey = [0,0,0,0]
+        #self.active_book = Ajb_Book()
+        self.books_db = Ajb_Books();
         GPIO.cleanup()
         # setup sigHandlers
         signal.signal(signal.SIGINT, self.signal_handler)
@@ -33,6 +39,7 @@ class Ajb(object):
         self.MIFAREReader = MFRC522.MFRC522()
         self.player = Ajb_Player(ajb_config.mpd_conn, self.status_led)
         self.setup_gpio()
+        self.player.loadPL("Please Please Me")
 
     def setup_gpio(self):
         GPIO.setmode(GPIO.BOARD)
@@ -73,13 +80,19 @@ class Ajb(object):
                 # Check for UID (otherwise skip)
                 if status == self.MIFAREReader.MI_OK:
                     print "Card read UID"+ str(uid[0])+","+ str(uid[1])+","+str(uid[2])+","+str(uid[3])
+                    print "Now:" + self.uid2str(uid)
+                    # check if book exists
+                    if (self.books_db.existsBook(self.uid2str(uid))):
+                        bookName = self.books_db.getBookByRfid(self.uid2str(uid))
+                        self.player.loadPL(bookName)
+                        self.player.play()
                     if uid == self.activeUidKey:
                         print "Old uid"
                     else:
                         print "New uid"
                         self.activeUidKey = uid
                 time.sleep(0.6)
-                self.player.toggle(10)
+                #self.player.toggle(10)
             # TODO RFID
             # rfid_placeholder = input("tag")
             # print rfid_placeholder

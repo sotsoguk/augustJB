@@ -14,7 +14,7 @@ from os.path import isfile, join
 class Ajb_Book(object):
 
 	def __init__(self):
-		self._tag_id = ""
+		self._tag_id = [0,0,0,0]
 		self._name = ""
 		self._num_tracks = 0
 		self._progress = [0,0]
@@ -55,7 +55,7 @@ class Ajb_Book(object):
 
 # Testroutine
 if __name__ =='__main__':
-	test_book = Ajb_Book('111111','Revolver')
+	test_book = Ajb_Book([136,4,101,44],'Revolver')
 	print test_book.getName()
 	test_book.setProgress(2,12)
 	track, sec = test_book.getProgress()
