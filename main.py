@@ -84,15 +84,20 @@ class Ajb(object):
                     print "Card read UID"+ str(uid[0])+","+ str(uid[1])+","+str(uid[2])+","+str(uid[3])
                     print "Now:" + self.uid2str(uid)
                     # check if book exists
-                    if (self.books_db.existsBook(self.uid2str(uid))):
-                        bookName = self.books_db.getBookByRfid(self.uid2str(uid))
-                        self.player.loadPL(bookName)
-                        self.player.play()
+                   
+                        
                     if uid == self.activeUidKey:
                         print "Old uid"
                     else:
                         print "New uid"
                         self.activeUidKey = uid
+                        print "HERE UPDATE BOOK STATUS"
+                        [te,se] = self.player.get_progress()
+                        print str(te)+","+str(se)
+                        if (self.books_db.existsBook(self.uid2str(uid))):
+                            bookName = self.books_db.getBookByRfid(self.uid2str(uid))
+                            self.player.loadPL(bookName)
+                            self.books_db.setActiveBook(self.uid2str(uid))
                 time.sleep(0.6)
                 #self.player.toggle(10)
             # TODO RFID
@@ -104,6 +109,7 @@ class Ajb(object):
         #status = self.player.get_status()
         [te,se] = self.player.get_progress()
         print str(te)+","+str(se)
+        self.books_db.updateProgressActiveBook([te,se])
         # TODO Update progress
 
 

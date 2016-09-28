@@ -19,6 +19,25 @@ class Ajb_Books(object):
         self.path_playlists = ajb_config.dirs["path_playlists"]
         # self.updateBooks()
 
+    #
+    def checkForActiveBook(self):
+        with self.con:
+            cur=self.con.cursor()
+            cur.execute('SELECT Id FROM Books WHERE Active = 1')
+            data = cur.fetchone()
+            if data is None:
+                print "No active Book!!"
+                return False
+            else:
+                print "Active Book found!"
+                return True
+    # if no book is active, first book (id = 1) is set active
+    def setFirstBookActive(self):
+        if self.checkForActiveBook() == False:
+            with self.con:
+                cur=self.con.cursor()
+                cur.execute('UPDATE Books SET Active = 1 WHERE Id = 1')
+
     def existsBook(self, rfid):
         print "In existsBook" + rfid
         with self.con:
@@ -71,9 +90,14 @@ class Ajb_Books(object):
         print "Reset progress..."
         with self.con:
             cur = self.con.cursor()
-            cur.execute('UPDATE Books SET Tracks=2')
-            cur.execute('UPDATE Books SET Secs=2')
-    
+            cur.execute('UPDATE Books SET Tracks=0')
+            cur.execute('UPDATE Books SET Secs=0')
+    def updateProgressActiveBook(self,progress):
+        print "Update Progress of active book"
+        with self.con:
+            cur = self.con.cursor()
+            cur.execute('UPDATE Books SET Tracks=(?) WHERE Active = 1',(progress[0],))
+            cur.execute('UPDATE Books SET Secs=(?) WHERE Active = 1',(progress[1],))
     def setActiveBook(self,rfid):
         print "Set active book"
         with self.con:
@@ -160,12 +184,15 @@ class Ajb_Books(object):
 
 if __name__ == '__main__':
     books_db = Ajb_Books()
+    books_db.checkForActiveBook()
+    books_db.setFirstBookActive()
+    books_db.checkForActiveBook()
     #books_db.resetProgressDB();
     books_db.deleteDB()
     books_db.updateBooks()
     books_db.printDB()
     books_db.setActiveBook("229,67,7,109")
-    books_db.printDB()
+    books_db.checkForActiveBook()
     books_db.setActiveBook("136,4,101,44")
     books_db.printDB()
     #books_db.updateBooks()

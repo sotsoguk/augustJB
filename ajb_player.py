@@ -145,11 +145,16 @@ class Ajb_Player(object):
     def get_progress(self):
         with self.mpd_client:
             if (self.mpd_client.status()['state'] == 'play') or (self.mpd_client.status()['state'] == 'pause'):
-                track = self.mpd_client.status()['song']
-                secs = self.mpd_client.status()['elapsed']
+                track = int(float(self.mpd_client.status()['song']))
+                secs = int(float(self.mpd_client.status()['elapsed']))
                 return [track, secs]
             else:
                 return [0,0]    
+
+    def set_progress(self,progress):
+        with self.mpd_client:
+            self.mpd_client.seek(progress[0],progress[1])
+            
     def close(self):
         self.stop(10)
         self.mpd_client.close()
