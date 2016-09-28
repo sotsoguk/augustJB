@@ -7,6 +7,21 @@ first alpha (0.01) version
 
 ## TODO
 
+### Startup
+- Clean GPIO 
+- set GPIO no warning
+- Database
+	- load DB
+	- update (look for new books)
+	- if no book in DB => *STOP*
+	- load active book
+		=> if no active book, set first book to active
+	- load player
+	- init LED
+	- load last know position, aka *progress*
+	- start loop 
+	- wait for RFID :)
+
 ### Final Hardware
 - Check port numbering (model a/b vs 2nd generation)
 - power saving
