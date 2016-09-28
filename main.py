@@ -72,7 +72,8 @@ class Ajb(object):
             # Scan for cards
             (status, TagType) = self.MIFAREReader.MFRC522_Request(
                 self.MIFAREReader.PICC_REQIDL)
-
+           # [te,se] = self.player.get_progress()
+           # print str(te)+","+str(se)
             # If a card is found
             if status == self.MIFAREReader.MI_OK:
                 print "Card detected"
@@ -100,8 +101,9 @@ class Ajb(object):
             # time.sleep(0.5)
 
     def on_playing(self):
-        status = self.player.get_status()
-
+        #status = self.player.get_status()
+        [te,se] = self.player.get_progress()
+        print str(te)+","+str(se)
         # TODO Update progress
 
 

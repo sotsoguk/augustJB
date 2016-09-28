@@ -17,7 +17,7 @@ class Ajb_Books(object):
         self.con = lite.connect(ajb_config.db_conn["db_name"])
         self.path_music = ajb_config.dirs["path_music"]
         self.path_playlists = ajb_config.dirs["path_playlists"]
-        self.updateBooks()
+        # self.updateBooks()
 
     def existsBook(self, rfid):
         print "In existsBook" + rfid
@@ -56,6 +56,41 @@ class Ajb_Books(object):
             print "NUmber of books %d" % num_books
             return num_books
 
+    # List DB
+    def printDB(self):
+        print "DB contains "+str(self.number_books_db()) + " books\n\n"
+        with self.con:
+            cur = self.con.cursor()
+            cur.execute(
+                'SELECT Id, Rfid, Name, NumTracks, Tracks, Secs, Active FROM Books ')
+            for row in cur:
+                print str(row[0])+".\t"+str(row[2])+ "\t @("+str(row[4])+","+str(row[5])+") " + str(row[6])
+                
+    # Resets progress for all books in DB
+    def resetProgressDB(self):
+        print "Reset progress..."
+        with self.con:
+            cur = self.con.cursor()
+            cur.execute('UPDATE Books SET Tracks=2')
+            cur.execute('UPDATE Books SET Secs=2')
+    
+    def setActiveBook(self,rfid):
+        print "Set active book"
+        with self.con:
+            cur = self.con.cursor()
+            cur.execute('UPDATE Books SET Active=0 WHERE Active = 1')
+            cur.execute('UPDATE Books SET Active=1 WHERE Rfid = (?)',(rfid,))
+
+    def getActiveBook(self):
+        print "Get active book"
+        
+    def deleteDB(self):
+        print "deleteDB"
+        with self.con:
+            cur = self.con.cursor()
+            cur.execute('DELETE FROM Books')
+
+    # Scans for new books and adds them to DB. Does NOT delete orphan entries from DB
     def updateBooks(self):
         print "Updating..."
 
@@ -115,18 +150,26 @@ class Ajb_Books(object):
                 print directory
                 print '-'*5
                 newId = self.number_books_db() + 1
-                toInsert = (newId, rfid_id, directory, num_tracks, 0, 0)
+                toInsert = (newId, rfid_id, directory, num_tracks, 0, 0,0)
                 with self.con:
                     cur = self.con.cursor()
-                    cur.execute("INSERT INTO Books VALUES (?,?,?,?,?,?)", toInsert)
+                    cur.execute("INSERT INTO Books VALUES (?,?,?,?,?,?,?)", toInsert)
         g.close()
 
         print "Done!"
 
 if __name__ == '__main__':
     books_db = Ajb_Books()
+    #books_db.resetProgressDB();
+    books_db.deleteDB()
     books_db.updateBooks()
-    print "in Main Books"
-    print "check DB exist"
-    bookEx = books_db.existsBook("121 111 111")
-    books_db.number_books_db()
+    books_db.printDB()
+    books_db.setActiveBook("229,67,7,109")
+    books_db.printDB()
+    books_db.setActiveBook("136,4,101,44")
+    books_db.printDB()
+    #books_db.updateBooks()
+    #print "in Main Books"
+    #print "check DB exist"
+    #bookEx = books_db.existsBook("121 111 111")
+    #books_db.number_books_db()

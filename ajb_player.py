@@ -4,9 +4,10 @@ ajb_player.py
 
 from mpd import MPDClient
 from threading import Lock
-# from ajb_book import Ajb_Book
+from ajb_book import Ajb_Book
 import ajb_config
 import re
+from ajb_books import Ajb_Books
 
 
 class LockableMPDClient(MPDClient):
@@ -141,7 +142,14 @@ class Ajb_Player(object):
     def get_file_info(self):
         with self.mpd_client:
             return self.mpd_client.currentsong()
-
+    def get_progress(self):
+        with self.mpd_client:
+            if (self.mpd_client.status()['state'] == 'play') or (self.mpd_client.status()['state'] == 'pause'):
+                track = self.mpd_client.status()['song']
+                secs = self.mpd_client.status()['elapsed']
+                return [track, secs]
+            else:
+                return [0,0]    
     def close(self):
         self.stop(10)
         self.mpd_client.close()
