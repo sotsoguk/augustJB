@@ -19,11 +19,11 @@ class Ajb_Book(object):
 		self._num_tracks = 0
 		self._progress = [0,0]
 
-	def __init__(self,tag_id,name):
-		self._tag_id = tag_id
-		self._name = name
-		self._num_tracks = 0
-		self._progress = [0,0]
+	# def __init__(self,tag_id,name):
+	# 	self._tag_id = tag_id
+	# 	self._name = name
+	# 	self._num_tracks = 0
+	# 	self._progress = [0,0]
 
 
 	# getter / setter

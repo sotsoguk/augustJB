@@ -9,6 +9,7 @@ import sys
 from os import listdir
 from os.path import isfile, join
 import ajb_config
+from ajb_book import Ajb_Book
 
 
 class Ajb_Books(object):
@@ -108,7 +109,25 @@ class Ajb_Books(object):
 
     def getActiveBook(self):
         print "Get active book"
-        
+        tmpBook = Ajb_Book()
+        with self.con:
+            cur = self.con.cursor()
+            cur.execute(
+                'SELECT Rfid, Name, NumTracks, Tracks, Secs FROM Books WHERE Active = 1')
+            for row in cur:
+                tmpBook._tag_id = row[0]
+                tmpBook._name = row[1]
+                tmpBook._num_tracks = row[2]
+                print row[3]
+                print row[4]
+                tmpBook._progress[0] = int(row[3])
+                tmpBook._progress[1] = int(row[4])
+                
+        print "Rfid\t"+tmpBook._tag_id
+        print "Name\t"+tmpBook._name
+        print "Progress\t"
+        return tmpBook
+
     def deleteDB(self):
         print "deleteDB"
         with self.con:

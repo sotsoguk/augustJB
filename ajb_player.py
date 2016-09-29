@@ -35,15 +35,15 @@ class Ajb_Player(object):
 
         self.status_led = status_led
         # self.book = Ajb_Book()
-
+        self.justStopped = False
         self.mpd_client = LockableMPDClient()
         with self.mpd_client:
             self.mpd_client.connect(**conn_details)
 
             self.mpd_client.update()
             self.mpd_client.clear()
-            self.mpd_client.add('Revolver')
-            self.mpd_client.play()
+            ##self.mpd_client.add('Revolver')
+            ##self.mpd_client.play()
             # self.mpd_client.setvol(70)
 
     # toggle play / pause
@@ -60,7 +60,7 @@ class Ajb_Player(object):
             elif self.is_playing:
                 self.status_led.interrupt('blink_fast', 3)
                 print "playing again"
-                self.mpd_client.seek(0, 0)
+                # self.mpd_client.seek(0, 0)
                 self.status_led.action = 'blink'
                 self.mpd_client.play()
             new_state = self.mpd_client.status()['state']
@@ -113,7 +113,9 @@ class Ajb_Player(object):
 
     def stop(self, channel):
 
+        
         print "stopping!"
+        self.justStopped = True
         self.playing = False
         # self.book.reset()
 
@@ -131,6 +133,13 @@ class Ajb_Player(object):
             self.mpd_client.play()
 
         self.status_led.action = 'blink'
+
+    def pause(self):
+        # TODO progress, file loading etc
+        with self.mpd_client:
+            self.mpd_client.pause()
+
+        self.status_led.action = 'blink_pause'
 
     def is_playing(self):
         return self.get_status()['state'] == 'play'

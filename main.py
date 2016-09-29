@@ -70,7 +70,15 @@ class Ajb(object):
         self.MIFAREReader = MFRC522.MFRC522()
         self.player = Ajb_Player(ajb_config.mpd_conn, self.status_led)
         self.setup_gpio()
-        self.player.loadPL("Please Please Me")
+        ## self.player.loadPL("Please Please Me")
+        self.active_book = self.books_db.getActiveBook()
+        # self.player.book_db = self.books_db 
+        self.player.loadPL(self.active_book._name)
+
+        print "Loaded PL "+self.active_book._name
+        self.player.set_progress(self.active_book._progress)
+        self.player.pause()
+        ## load active book
 
     def setup_gpio(self):
         GPIO.setmode(GPIO.BOARD)
@@ -98,6 +106,12 @@ class Ajb(object):
         while True:
             if self.player.is_playing():
                 self.on_playing()
+            if self.player.justStopped == True:
+                print "Just Stopped"
+                [te,se] = self.player.get_progress()
+                print str(te)+","+str(se)
+                self.books_db.updateProgressActiveBook([te,se])
+                self.player.justStopped = False
             # TODO Book finished
             # Scan for cards
             (status, TagType) = self.MIFAREReader.MFRC522_Request(
@@ -116,18 +130,23 @@ class Ajb(object):
                     # check if book exists
                    
                         
-                    if uid == self.activeUidKey:
-                        print "Old uid"
+                    if self.uid2str(uid) == self.active_book._tag_id:
+                        print "Book already playing"
                     else:
-                        print "New uid"
-                        self.activeUidKey = uid
+                        print "New UID => Change book"
+                        # self.activeUidKey = uid
                         print "HERE UPDATE BOOK STATUS"
                         [te,se] = self.player.get_progress()
                         print str(te)+","+str(se)
+                        self.books_db.updateProgressActiveBook([te,se])
                         if (self.books_db.existsBook(self.uid2str(uid))):
-                            bookName = self.books_db.getBookByRfid(self.uid2str(uid))
-                            self.player.loadPL(bookName)
+                            
                             self.books_db.setActiveBook(self.uid2str(uid))
+                            self.active_book = self.books_db.getActiveBook()
+                            self.player.loadPL(self.active_book._name)
+                            print "Loaded PL "+self.active_book._name
+                            self.player.set_progress(self.active_book._progress)
+
                 time.sleep(0.6)
                 #self.player.toggle(10)
             # TODO RFID
