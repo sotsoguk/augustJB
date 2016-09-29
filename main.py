@@ -12,9 +12,27 @@ from ajb_books import Ajb_Books
 from ajb_book import Ajb_Book
 from threading import Thread
 import MFRC522
+import argparse
 # import sqlite3
 # import rfid
 
+# Just a small function to read & print out the UID of a new RFID chip
+
+def readKey():
+     
+    MIFAREReader = MFRC522.MFRC522()
+    print "Waiting for RFID tags ..."
+    print "Exit with Ctrl + C"
+    while True:
+       (status, TagType) = MIFAREReader.MFRC522_Request(
+            MIFAREReader.PICC_REQIDL) 
+       if status == MIFAREReader.MI_OK:
+            print "Card detected"
+            # Get the UID of card
+            (status, uid) = MIFAREReader.MFRC522_Anticoll()
+            # Check for UID (otherwise skip)
+            if status == MIFAREReader.MI_OK:
+                print "UID\t"+ str(uid[0])+","+ str(uid[1])+","+str(uid[2])+","+str(uid[3])
 
 class Ajb(object):
 
@@ -24,10 +42,22 @@ class Ajb(object):
 
     def __init__(self):
 
-        # TODO RFID
+        # Startup: What has to be done
+
         self.activeUidKey = [0,0,0,0]
         #self.active_book = Ajb_Book()
-        self.books_db = Ajb_Books();
+        
+        # DB loading
+        self.books_db = Ajb_Books()
+        self.books_db.updateBooks()
+        if self.books_db.number_books_db() == 0:
+            print "No Books in Database."
+            sys.exit(0)
+        if self.books_db.checkForActiveBook() == False:
+            self.books_db.setFirstBookActive()
+
+
+        GPIO.setwarnings(False)
         GPIO.cleanup()
         # setup sigHandlers
         signal.signal(signal.SIGINT, self.signal_handler)
@@ -114,5 +144,36 @@ class Ajb(object):
 
 
 if __name__ == '__main__':
-    reader = Ajb()
-    reader.loop()
+    # Argument handling
+    parser = argparse.ArgumentParser(description="august's JukeBox")
+    parser.add_argument('--readKey', action ='store_true', default = False, 
+                        dest = 'readKey',
+                        help='Read out RFID keys')
+    parser.add_argument('--showDB', action = 'store_true', default = False,
+                        dest = 'showDB',
+                        help = 'Print book database')
+    parser.add_argument('--resetDB', action = 'store_true', default = False,
+                        dest = 'resetDB',
+                        help = 'delete DB & rescan')
+    parser.add_argument('--resetProgress', action='store_true', default = False,
+                        dest = 'resetProgress',
+                        help = 'reset progress of all books')
+    results = parser.parse_args()
+
+    ## Read UID & print
+    if results.readKey:
+        readKey()
+       
+    elif results.showDB:
+        books_db = Ajb_Books()
+        books_db.printDB()
+    elif results.resetDB:
+        books_db = Ajb_Books()
+        books_db.deleteDB()
+        books_db.updateBooks()
+    elif results.resetProgress:
+        books_db = Ajb_Books()
+        books_db.resetProgressDB()
+    else:
+        reader = Ajb()
+        reader.loop()

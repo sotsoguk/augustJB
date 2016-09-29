@@ -78,12 +78,13 @@ class Ajb_Books(object):
     # List DB
     def printDB(self):
         print "DB contains "+str(self.number_books_db()) + " books\n\n"
+        print "ID\tRFID\t\tName\t\tProgress\tActive"       
         with self.con:
             cur = self.con.cursor()
             cur.execute(
                 'SELECT Id, Rfid, Name, NumTracks, Tracks, Secs, Active FROM Books ')
             for row in cur:
-                print str(row[0])+".\t"+str(row[2])+ "\t @("+str(row[4])+","+str(row[5])+") " + str(row[6])
+                print str(row[0])+".\t"+str(row[1])+"\t"+str(row[2])+ "\t @("+str(row[4])+","+str(row[5])+") " + str(row[6])
                 
     # Resets progress for all books in DB
     def resetProgressDB(self):
