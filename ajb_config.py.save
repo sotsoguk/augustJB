@@ -1,7 +1,7 @@
 """
 ajb_config.py
 
-Configuration file for augustJukeBox
+ Configuration file for augustJukeBox
 
 TODO
 
@@ -20,7 +20,7 @@ btn_pins = [
      { 'pin' : 13, 'callback' : 'ffw', 'bouncetime' : 200},
      { 'pin' : 15, 'callback' : 'stop', 'bouncetime' : 200}
 ]
-status_led_pin = 16
+status_led_pin = 15
 
 
 # Board Numbering

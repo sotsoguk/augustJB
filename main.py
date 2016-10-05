@@ -134,7 +134,10 @@ class Ajb(object):
                         print "Book already playing"
                     else:
                         print "New UID => Change book"
-                        # self.activeUidKey = uid
+                        print "Update DB"
+			self.books_db.updateBooks()
+                        self.player.update()
+			# self.activeUidKey = uid
                         print "HERE UPDATE BOOK STATUS"
                         [te,se] = self.player.get_progress()
                         print str(te)+","+str(se)

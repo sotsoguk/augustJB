@@ -66,6 +66,10 @@ class Ajb_Player(object):
             new_state = self.mpd_client.status()['state']
             print 'was %s, now  %s' % (state, new_state)
 
+    def update(self):
+        with self.mpd_client:
+            self.mpd_client.update()
+
     def ffw(self, channel):
         print channel
 	self.status_led.interrupt('blink_fast', 3)
