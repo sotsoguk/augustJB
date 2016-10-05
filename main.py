@@ -82,7 +82,7 @@ class Ajb(object):
 
     def setup_gpio(self):
         GPIO.setmode(GPIO.BOARD)
-        GPIO.setup(22, GPIO.OUT)
+        GPIO.setup(12, GPIO.OUT)
         # GPIO.output(self.NRSTPD, 1)
         # GPIO.output(self.NRSTPD, 1)
         # input buttons
